@@ -1,6 +1,18 @@
 class NumericalScheme:
-    def __init__(self):
-        print("NumericalScheme init")
+    """
+    Describes a numerical scheme for solving a system of equations.
+    """
+    def u(self, i, n, uPrev):
+        """
+        Integrate the system to the next time step.
 
-    def integrate(self):
-        print("Error: integrate() not implemented")
+        Parameters
+        ----------
+        i : int
+            The index of the cell.
+        n : int 
+            The index of the time step.
+        uPrev : array
+            The values of u at the previous time step.
+        """
+        print("Error: u() not implemented")
