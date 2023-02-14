@@ -34,9 +34,9 @@ class RoadTraffic:
             self.uValues[index] = nextu
             self.u = nextu
 
-            # Draw the system
-            # self.drawer.draw(u)
-
             # Next value
             index += 1
+
+        # Draw the plot
+        self.drawer.draw(self.uValues)
             

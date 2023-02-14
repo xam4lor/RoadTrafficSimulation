@@ -7,13 +7,14 @@ class Drawer:
     def __init__(self):
         self.plotType = ColorMapPlot()
 
-    def draw(self, u):
+    def draw(self, uValues):
         """
         Draw the plot.
         
         Parameters
         ----------
-        u : numpy.ndarray
-            The state vector.
+        uValues : array
+            All values of u.
         """
-        return 0
+        indexLook = 10
+        self.plotType.draw(uValues[indexLook])
