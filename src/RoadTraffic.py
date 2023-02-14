@@ -1,5 +1,6 @@
-from Drawer import Drawer
-from Integrator import Integrator
+from src.Drawer import Drawer
+from src.Integrator import Integrator
+import numpy as np
 
 class RoadTraffic:
     """
@@ -12,14 +13,26 @@ class RoadTraffic:
         # Create an instance of the Drawer class
         self.drawer = Drawer()
 
+        # Initialize u
+        N = 200 # Number of points
+        self.u = np.zeros(N) 
+        self.u[int(N/2)] = 100
+
+        # All values of ui
+        self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt), N])
+        self.uValues[0] = self.u
+
     """
     Run the simulation.
     """
     def run(self):
         while (self.integrator.t < self.integrator.tMax):
             # Integrate the system
-            # self.integrator.step(u)
+            nextu = self.integrator.step(self.u)
+            index = int(self.integrator.t * self.integrator.dt) 
+            self.uValues[index] = nextu
+            self.u = nextu
 
             # Draw the system
             # self.drawer.draw(u)
-            return 0
+            

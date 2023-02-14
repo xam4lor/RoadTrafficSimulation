@@ -1,4 +1,4 @@
-from drawer.PlotType import PlotType
+from src.drawer.PlotType import PlotType
 
 class ColorMapPlot(PlotType):
     def draw(self, u):

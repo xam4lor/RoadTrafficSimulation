@@ -1,4 +1,4 @@
-from drawer.ColorMapPlot import ColorMapPlot
+from src.drawer.ColorMapPlot import ColorMapPlot
 
 class Drawer:
     """
