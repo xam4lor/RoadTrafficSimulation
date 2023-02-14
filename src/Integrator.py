@@ -1,4 +1,5 @@
 from src.integration.FirstOrderGodunov import FirstOrderGodunov
+import numpy as np 
 
 class Integrator:
     """
@@ -14,7 +15,7 @@ class Integrator:
         self.dt = 0.01
     
 
-    def step(self, u):
+    def step(self, u, N):
         """
         Integrate the system to the next time step.
 
@@ -22,14 +23,18 @@ class Integrator:
         ----------
         u : array
             The values of u at the previous time step.
+        
+        N : integer
+            Number of points
         """
 
         # Integrate the system
-        # Calculate the values of u at the next time step using self.numericalScheme.u()
-        # Todo ........
+        nextu = np.zeros(N)
+        for i in range(0, N):
+            nextu[i] = self.numericalScheme.u(u[i], u[i-1], self.dt)
 
         # Update the time
         self.t += self.dt
 
         # Return the values of u at the next time step
-        return u
+        return nextu

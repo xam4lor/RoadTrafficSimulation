@@ -2,17 +2,17 @@ class NumericalScheme:
     """
     Describes a numerical scheme for solving a system of equations.
     """
-    def u(self, i, n, uPrev):
+    def u(self, ui, uLefti, dt):
         """
         Integrate the system to the next time step.
 
         Parameters
         ----------
-        i : int
-            The index of the cell.
-        n : int 
-            The index of the time step.
-        uPrev : array
-            The values of u at the previous time step.
+        ui : float
+            The values of ui at the previous time step.
+        uLefti : float
+            The values of uLefti at the previous time step.
+        dt : float
+            Timestep.
         """
         print("Error: u() not implemented")

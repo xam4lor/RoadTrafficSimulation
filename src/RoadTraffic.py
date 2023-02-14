@@ -14,25 +14,29 @@ class RoadTraffic:
         self.drawer = Drawer()
 
         # Initialize u
-        N = 200 # Number of points
-        self.u = np.zeros(N) 
-        self.u[int(N/2)] = 100
+        self.N = 200 # Number of points
+        self.u = np.zeros(self.N) 
+        self.u[int(self.N/2)] = 100
 
         # All values of ui
-        self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt), N])
+        self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt) + 1, self.N])
         self.uValues[0] = self.u
+        self.uValues[1] = self.u
 
     """
     Run the simulation.
     """
     def run(self):
+        index = 1
         while (self.integrator.t < self.integrator.tMax):
             # Integrate the system
-            nextu = self.integrator.step(self.u)
-            index = int(self.integrator.t * self.integrator.dt) 
+            nextu = self.integrator.step(self.u, self.N) 
             self.uValues[index] = nextu
             self.u = nextu
 
             # Draw the system
             # self.drawer.draw(u)
+
+            # Next value
+            index += 1
             
