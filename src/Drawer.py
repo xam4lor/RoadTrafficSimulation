@@ -16,5 +16,5 @@ class Drawer:
         uValues : array
             All values of u.
         """
-        indexLook = 10
+        indexLook = 150
         self.plotType.draw(uValues[indexLook])

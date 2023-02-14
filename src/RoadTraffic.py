@@ -15,8 +15,8 @@ class RoadTraffic:
 
         # Initialize u
         self.N = 200 # Number of points
-        self.u = np.zeros(self.N) 
-        self.u[int(self.N/2)] = 100
+        self.u = np.zeros(self.N)
+        self.u[int(self.N/2)-10:int(self.N/2)+10] = 1
 
         # All values of ui
         self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt) + 2, self.N])
