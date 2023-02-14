@@ -12,7 +12,7 @@ class Integrator:
         # Simulation parameters
         self.t = 0
         self.tMax = 1
-        self.dt = 0.01
+        self.dt = 0.001
     
 
     def step(self, u, N):

@@ -19,7 +19,7 @@ class RoadTraffic:
         self.u[int(self.N/2)] = 100
 
         # All values of ui
-        self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt) + 1, self.N])
+        self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt) + 2, self.N])
         self.uValues[0] = self.u
         self.uValues[1] = self.u
 
