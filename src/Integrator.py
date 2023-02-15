@@ -31,7 +31,7 @@ class Integrator:
         # Integrate the system
         nextu = np.zeros(N)
         for i in range(0, N):
-            nextu[i] = self.numericalScheme.u(u[i], u[i-1], self.dt)
+            nextu[i] = self.numericalScheme.u3(u[i], u[i-1], self.dt)
 
         # Update the time
         self.t += self.dt
