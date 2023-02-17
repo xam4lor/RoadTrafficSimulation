@@ -13,7 +13,7 @@ class RoadTraffic:
         # Create an instance of the Drawer class
         self.drawer = Drawer(self)
 
-        # Initialize grid points u
+        # Initialize grid points u (= rho(x,t)))
         self.N = 200 # Number of points in the grid
         self.u = np.zeros(self.N) # Grid of points
 

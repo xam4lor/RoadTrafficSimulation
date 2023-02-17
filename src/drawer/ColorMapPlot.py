@@ -25,7 +25,7 @@ class ColorMapPlot(PlotType):
         plt.colorbar()
         plt.xlabel('x')
         plt.ylabel('t')
-        plt.title('u')
+        plt.title('Density of cars $\\rho(x,t)$')
         plt.show()
 
     
