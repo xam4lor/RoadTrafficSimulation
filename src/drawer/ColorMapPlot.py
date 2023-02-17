@@ -3,11 +3,29 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class ColorMapPlot(PlotType):
-    def draw(self, u):
-        index = 10
+    def draw(self, uValues):
+        """
+        Plot the u values at each time step as a color map.
+        """
+        # Size of dimensions
+        Nt = len(uValues)
+        Nx = len(uValues[0])
+        x = np.linspace(0, 1, Nx)
+        t = np.linspace(0, 1, Nt)
 
-        # Scatter plot
-        plt.scatter(np.linspace(0, 1, len(u[index])), u[index])
+        # Create an array for the u values
+        u = np.zeros((Nt, Nx))
+        for i in range(0, Nt):
+            for j in range(0, Nx):
+                u[i, j] = uValues[i][j]
+
+        # Plot the u values as a color map
+        plt.figure()
+        plt.pcolor(x, t, u, cmap='jet')
+        plt.colorbar()
+        plt.xlabel('x')
+        plt.ylabel('t')
+        plt.title('u')
         plt.show()
 
     
