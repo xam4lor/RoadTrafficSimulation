@@ -41,5 +41,5 @@ class RoadTraffic:
             loopIndex += 1
 
         # Draw the plots
-        self.drawer.draw(self.uValues)
+        self.drawer.draw()
             
