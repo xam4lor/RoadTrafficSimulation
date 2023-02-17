@@ -7,6 +7,7 @@ class Drawer:
     def __init__(self):
         self.plotType = ColorMapPlot()
 
+
     def draw(self, uValues):
         """
         Draw the plot.
@@ -16,5 +17,4 @@ class Drawer:
         uValues : array
             All values of u.
         """
-        indexLook = 150
-        self.plotType.draw(uValues[indexLook])
+        self.plotType.draw(uValues)

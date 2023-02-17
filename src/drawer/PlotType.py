@@ -1,9 +1,14 @@
 class PlotType:
     """
-    Base class for all plot types.
+    Generic class for all plot types.
     """
-    def draw(self, u):
+    def draw(self, uValues):
         """
         Draw the system.
+
+        Parameters
+        ----------
+        uValues : array
+            The values of u at each time step.
         """
-        print("Draw method not implemented")
+        raise NotImplementedError("Draw method not implemented")

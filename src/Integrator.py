@@ -9,7 +9,7 @@ class Integrator:
         # Select the numerical scheme
         self.numericalScheme = FirstOrderGodunov()
 
-        # Simulation parameters
+        # Simulation time parameters
         self.t = 0
         self.tMax = 1
         self.dt = 0.0001
@@ -25,10 +25,14 @@ class Integrator:
             The values of u at the previous time step.
         
         N : integer
-            Number of points
-        """
+            Number of points.
 
-        # Integrate the system
+        Returns
+        -------
+        nextu : array
+            The values of u at the next time step.
+        """
+        # Compute the values of u at the next time step
         nextu = np.zeros(N)
         for i in range(0, N):
             nextu[i] = self.numericalScheme.u3(u[i], u[i-1], self.dt)

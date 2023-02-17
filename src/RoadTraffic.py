@@ -13,30 +13,33 @@ class RoadTraffic:
         # Create an instance of the Drawer class
         self.drawer = Drawer()
 
-        # Initialize u
-        self.N = 200 # Number of points
-        self.u = np.zeros(self.N)
-        self.u[int(self.N/2)-10:int(self.N/2)+10] = 1
+        # Initialize grid points u
+        self.N = 200 # Number of points in the grid
+        self.u = np.zeros(self.N) # Grid of points
 
-        # All values of ui
+        # Initial condition
+        self.u[int(self.N/2)-10:int(self.N/2)+10] = 1 
+
+        # Store the values of u
         self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt) + 2, self.N])
-        self.uValues[0] = self.u
-        self.uValues[1] = self.u
+        self.uValues[0] = self.u # u[-1] = u0
+        self.uValues[1] = self.u # u[0] = u1
 
-    """
-    Run the simulation.
-    """
+
     def run(self):
-        index = 1
+        """
+        Run the simulation and draw the plots.
+        """
+        loopIndex = 1
         while (self.integrator.t < self.integrator.tMax):
-            # Integrate the system
+            # Integrate the system to the next time step
             nextu = self.integrator.step(self.u, self.N) 
-            self.uValues[index] = nextu
+            self.uValues[loopIndex] = nextu
             self.u = nextu
 
             # Next value
-            index += 1
+            loopIndex += 1
 
-        # Draw the plot
+        # Draw the plots
         self.drawer.draw(self.uValues)
             
