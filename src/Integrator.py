@@ -10,7 +10,8 @@ class Integrator:
         self.roadTraffic = roadTraffic
 
         # Select the numerical scheme
-        self.numericalScheme = FirstOrderGodunov()
+        selectedNumericalScheme = 1 # 1, 2, or 3, corresponding to equation (2.5,6,7)
+        self.numericalScheme = FirstOrderGodunov(selectedNumericalScheme)
 
         # Simulation time parameters
         self.t = 0
@@ -33,10 +34,9 @@ class Integrator:
             The values of u at the next time step.
         """
         # Compute the values of u at the next time step
-        N = self.roadTraffic.N
-        nextu = np.zeros(N)
-        for i in range(0, N):
-            nextu[i] = self.numericalScheme.u1(u[i], u[i-1], self.dt)
+        nextu = np.zeros(self.roadTraffic.N)
+        for i in range(0, self.roadTraffic.N):
+            nextu[i] = self.numericalScheme.u(u[i], u[i-1], self.dt)
 
         # Update the time
         self.t += self.dt
