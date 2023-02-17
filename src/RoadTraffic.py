@@ -31,15 +31,22 @@ class RoadTraffic:
         Run the simulation and draw the plots.
         """
         loopIndex = 1
+        print("Running simulation...")
         while (self.integrator.t < self.integrator.tMax):
             # Integrate the system to the next time step
             nextu = self.integrator.step(self.u) 
             self.uValues[loopIndex] = nextu
             self.u = nextu
 
+            # Print the progress
+            if int(self.integrator.t * 1000) % int(self.integrator.tMax / 100 * 1000) == 0:
+                print("t = " + str(int(self.integrator.t * 100)/100) + " / " + str(self.integrator.tMax) + " s.", end="\r")
+
             # Next value
             loopIndex += 1
 
         # Draw the plots
+        print("\nDrawing plots...")
         self.drawer.draw()
+        print("Done.")
             

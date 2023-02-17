@@ -15,7 +15,7 @@ class Integrator:
 
         # Simulation time parameters
         self.t = 0
-        self.tMax = 1
+        self.tMax = 10
         self.dt = 0.001
     
 

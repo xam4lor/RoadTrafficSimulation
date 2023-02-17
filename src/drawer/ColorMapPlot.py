@@ -8,10 +8,10 @@ class ColorMapPlot(PlotType):
         Plot the u values at each time step as a color map.
         """
         # Size of dimensions
-        Nt = len(uValues)
+        Nt = int(len(uValues)/10)
         Nx = len(uValues[0])
         x = np.linspace(0, 1, Nx)
-        t = np.linspace(0, 1, Nt)
+        t = np.linspace(0, 10, Nt)
 
         # Create an array for the u values
         u = np.zeros((Nt, Nx))
