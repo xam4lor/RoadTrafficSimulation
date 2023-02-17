@@ -21,7 +21,7 @@ class ColorMapPlot(PlotType):
 
         # Plot the u values as a color map
         plt.figure()
-        plt.pcolor(x, t, u, cmap='jet')
+        plt.pcolor(x, t, u, cmap='coolwarm')
         plt.colorbar()
         plt.xlabel('x')
         plt.ylabel('t')
