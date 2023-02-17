@@ -33,7 +33,7 @@ class RoadTraffic:
         loopIndex = 1
         while (self.integrator.t < self.integrator.tMax):
             # Integrate the system to the next time step
-            nextu = self.integrator.step(self.u, self.N) 
+            nextu = self.integrator.step(self.u) 
             self.uValues[loopIndex] = nextu
             self.u = nextu
 

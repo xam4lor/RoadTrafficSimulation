@@ -15,10 +15,10 @@ class Integrator:
         # Simulation time parameters
         self.t = 0
         self.tMax = 1
-        self.dt = 0.0001
+        self.dt = 0.001
     
 
-    def step(self, u, N):
+    def step(self, u):
         """
         Integrate the system to the next time step.
 
@@ -26,9 +26,6 @@ class Integrator:
         ----------
         u : array
             The values of u at the previous time step.
-        
-        N : integer
-            Number of points.
 
         Returns
         -------
@@ -36,9 +33,10 @@ class Integrator:
             The values of u at the next time step.
         """
         # Compute the values of u at the next time step
+        N = self.roadTraffic.N
         nextu = np.zeros(N)
         for i in range(0, N):
-            nextu[i] = self.numericalScheme.u3(u[i], u[i-1], self.dt)
+            nextu[i] = self.numericalScheme.u1(u[i], u[i-1], self.dt)
 
         # Update the time
         self.t += self.dt

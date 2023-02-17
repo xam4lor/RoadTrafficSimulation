@@ -12,13 +12,8 @@ class Drawer:
         self.plotType = ColorMapPlot()
 
 
-    def draw(self, uValues):
+    def draw(self):
         """
         Draw the plot.
-        
-        Parameters
-        ----------
-        uValues : array
-            All values of u.
         """
-        self.plotType.draw(uValues)
+        self.plotType.draw(self.roadTraffic.uValues)
