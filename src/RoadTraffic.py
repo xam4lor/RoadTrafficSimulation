@@ -8,10 +8,10 @@ class RoadTraffic:
     """
     def __init__(self):
         # Create an instance of the Integrator class
-        self.integrator = Integrator()
+        self.integrator = Integrator(self)
 
         # Create an instance of the Drawer class
-        self.drawer = Drawer()
+        self.drawer = Drawer(self)
 
         # Initialize grid points u
         self.N = 200 # Number of points in the grid

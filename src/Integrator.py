@@ -5,7 +5,10 @@ class Integrator:
     """
     The Integrator class is responsible for integrating the system given a numerical scheme.
     """
-    def __init__(self):
+    def __init__(self, roadTraffic):
+        # Store the road traffic object
+        self.roadTraffic = roadTraffic
+
         # Select the numerical scheme
         self.numericalScheme = FirstOrderGodunov()
 
