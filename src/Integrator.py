@@ -11,7 +11,7 @@ class Integrator:
 
         # Select the numerical scheme
         selectedNumericalScheme = roadTraffic.config["selected_scheme_index"] # 1, 2, or 3, corresponding to equation (2.5,6,7)
-        self.numericalScheme = FirstOrderGodunov(roadTraffic.config["schemes"], selectedNumericalScheme)
+        self.numericalScheme = FirstOrderGodunov(roadTraffic.config, selectedNumericalScheme)
 
         # Simulation time parameters
         self.t = 0

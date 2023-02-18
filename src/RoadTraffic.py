@@ -18,10 +18,10 @@ class RoadTraffic:
         self.drawer = Drawer(self)
 
         # Initialize grid points u (= rho(x,t)))
-        self.N = self.config["config"]["number_of_points"]  # Number of points in the grid
+        self.N = int(self.config["config"]["x_max"] / self.config["config"]["dx"]) # Number of points in the grid
         self.u = np.zeros(self.N) # Grid of points
 
-        # Initial condition
+        # Initial condition (to modify)
         self.u[int(self.N/2)-10:int(self.N/2)+10] = 1 
 
         # Store the values of u
@@ -44,7 +44,7 @@ class RoadTraffic:
 
             # Print the progress
             if int(self.integrator.t * 1000) % int(self.integrator.tMax / 100 * 1000) == 0:
-                print("t = " + str(int(self.integrator.t * 100)/100) + " / " + str(self.integrator.tMax) + " s.", end="\r")
+                print("t = " + str(int(self.integrator.t * 10)/10) + " / " + str(self.integrator.tMax) + " s.", end="\r")
 
             # Next value
             loopIndex += 1

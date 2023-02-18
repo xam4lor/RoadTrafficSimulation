@@ -8,16 +8,16 @@ class FirstOrderGodunov(NumericalScheme):
     Parameters
     ----------
     config : dict
-        The configuration dictionary for the schemes.
+        The configuration dictionary.
     selectNumericalScheme : int
         The numerical scheme index to use.
     """
     def __init__(self, config, selectNumericalScheme):
         # Parameters
-        self.vm = config["first_order_godunov"]["vm"]
-        self.rhom = config["first_order_godunov"]["rhom"]
-        self.dx = config["first_order_godunov"]["dx"]
-        self.a = config["first_order_godunov"]["a"]
+        self.dx = config["config"]["dx"]
+        self.vm = config["schemes"]["first_order_godunov"]["vm"]
+        self.rhom = config["schemes"]["first_order_godunov"]["rhom"]
+        self.a = config["schemes"]["first_order_godunov"]["a"]
 
         # Select the numerical scheme
         if selectNumericalScheme == 1:

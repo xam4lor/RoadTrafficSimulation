@@ -8,9 +8,9 @@ class ColorMapPlot(PlotType):
     """
     def draw(self, config, uValues):
         # Size of dimensions
-        Nt = int(len(uValues)/10)
+        Nt = int(len(uValues)/2)
         Nx = len(uValues[0])
-        x = np.linspace(0, 1, Nx)
+        x = np.linspace(0, config["config"]["x_max"], Nx)
         t = np.linspace(0, config["config"]["t_max"], Nt)
 
         # Create an array for the u values
