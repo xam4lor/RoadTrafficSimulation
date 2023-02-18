@@ -2,7 +2,7 @@ class NumericalScheme:
     """
     Generic class to describe a numerical scheme for solving a system of equations.
     """
-    def u(self, ui, uLefti, dt):
+    def u(self, ui, uLefti, x, t):
         """
         Integrate the system to the next time step.
 
@@ -12,7 +12,9 @@ class NumericalScheme:
             The values of ui at the previous time step.
         uLefti : float
             The values of uLefti at the previous time step.
-        dt : float
-            Timestep.
+        x : float   
+            The x coordinate.
+        t : float
+            The t coordinate.
         """
         raise NotImplementedError("Error: u() not implemented")

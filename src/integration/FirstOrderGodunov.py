@@ -14,10 +14,12 @@ class FirstOrderGodunov(NumericalScheme):
     """
     def __init__(self, config, selectNumericalScheme):
         # Parameters
-        self.dx = config["config"]["dx"]
         self.vm = config["schemes"]["first_order_godunov"]["vm"]
         self.rhom = config["schemes"]["first_order_godunov"]["rhom"]
         self.a = config["schemes"]["first_order_godunov"]["a"]
+
+        self.dx = config["config"]["dx"]
+        self.dt = config["config"]["dt"]
 
         # Select the numerical scheme
         if selectNumericalScheme == 1:
@@ -27,16 +29,21 @@ class FirstOrderGodunov(NumericalScheme):
         elif selectNumericalScheme == 3:
             self.selectNumericalScheme = self.u3
 
-    def u(self, ui, uLefti, dt):
-        return self.selectNumericalScheme(ui, uLefti, dt)
+    def u(self, ui, uLefti, x, t):
+        return self.selectNumericalScheme(ui, uLefti, x, t)
 
 
     ### Numerical schemes ###
-    def u1(self, ui, uLefti, dt):
-        return ui - self.vm * (1.0 - 2.0 * ui / self.rhom) * dt / self.dx * (ui - uLefti)
+    def u1(self, ui, uLefti, x, t):
+        v = self.vm
+        # if x > 7.0 and x <= 7.2:
+        #     v = 0
+        return ui - v * (1.0 - 2.0 * ui / self.rhom) * self.dt / self.dx * (ui - uLefti)
     
-    def u2(self, ui, uLefti, dt):
-        return ui - self.vm * (1.0 - ui / self.rhom) * dt / self.dx * (ui - uLefti) * np.exp(-ui / self.rhom)
+    def u2(self, ui, uLefti, x, t):
+        v = self.vm
+        return ui - v * (1.0 - ui / self.rhom) * self.dt / self.dx * (ui - uLefti) * np.exp(-ui / self.rhom)
     
-    def u3(self, ui, uLefti, dt):
-        return ui - self.vm * (1.0 - (ui / self.rhom)**self.a) * dt / self.dx * (ui - uLefti) * np.exp(-(1.0 / self.a) * (ui / self.rhom)**self.a)
+    def u3(self, ui, uLefti, x, t):
+        v = self.vm
+        return ui - v * (1.0 - (ui / self.rhom)**self.a) * self.dt / self.dx * (ui - uLefti) * np.exp(-(1.0 / self.a) * (ui / self.rhom)**self.a)

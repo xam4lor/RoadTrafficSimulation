@@ -36,7 +36,7 @@ class Integrator:
         # Compute the values of u at the next time step
         nextu = np.zeros(self.roadTraffic.N)
         for i in range(0, self.roadTraffic.N):
-            nextu[i] = self.numericalScheme.u(u[i], u[i-1], self.dt)
+            nextu[i] = self.numericalScheme.u(u[i], u[i-1], self.roadTraffic.config["config"]["dx"] * i, self.t)
 
         # Update the time
         self.t += self.dt
