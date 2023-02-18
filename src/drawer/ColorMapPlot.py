@@ -26,6 +26,8 @@ class ColorMapPlot(PlotType):
         plt.xlabel('x')
         plt.ylabel('t')
         plt.title('Density of cars $\\rho(x,t)$')
-        plt.show()
 
+        # Save the plot
+        plt.savefig("./output/colormapplot.png")
+        plt.show()
     
