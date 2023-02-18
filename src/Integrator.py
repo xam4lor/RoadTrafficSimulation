@@ -10,13 +10,13 @@ class Integrator:
         self.roadTraffic = roadTraffic
 
         # Select the numerical scheme
-        selectedNumericalScheme = 1 # 1, 2, or 3, corresponding to equation (2.5,6,7)
-        self.numericalScheme = FirstOrderGodunov(selectedNumericalScheme)
+        selectedNumericalScheme = roadTraffic.config["selected_scheme_index"] # 1, 2, or 3, corresponding to equation (2.5,6,7)
+        self.numericalScheme = FirstOrderGodunov(roadTraffic.config["schemes"], selectedNumericalScheme)
 
         # Simulation time parameters
         self.t = 0
-        self.tMax = 10
-        self.dt = 0.001
+        self.tMax = roadTraffic.config["config"]["t_max"]
+        self.dt = roadTraffic.config["config"]["dt"]
     
 
     def step(self, u):

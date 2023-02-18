@@ -3,15 +3,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class ColorMapPlot(PlotType):
-    def draw(self, uValues):
-        """
-        Plot the u values at each time step as a color map.
-        """
+    """
+    Plot the u values at each time step as a color map.
+    """
+    def draw(self, config, uValues):
         # Size of dimensions
         Nt = int(len(uValues)/10)
         Nx = len(uValues[0])
         x = np.linspace(0, 1, Nx)
-        t = np.linspace(0, 10, Nt)
+        t = np.linspace(0, config["config"]["t_max"], Nt)
 
         # Create an array for the u values
         u = np.zeros((Nt, Nx))

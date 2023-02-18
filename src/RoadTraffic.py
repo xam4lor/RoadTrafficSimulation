@@ -1,20 +1,24 @@
 from src.Drawer import Drawer
 from src.Integrator import Integrator
 import numpy as np
+import json
 
 class RoadTraffic:
     """
     The RoadTraffic class is responsible for running the simulation.
     """
     def __init__(self):
-        # Create an instance of the Integrator class
-        self.integrator = Integrator(self)
+        # Read configuration file
+        fConfig = open("./res/config.json", "r")
+        self.config = json.load(fConfig)
+        fConfig.close()
 
-        # Create an instance of the Drawer class
+        # Create an instance of the Integrator and Drawer class
+        self.integrator = Integrator(self)
         self.drawer = Drawer(self)
 
         # Initialize grid points u (= rho(x,t)))
-        self.N = 200 # Number of points in the grid
+        self.N = self.config["config"]["number_of_points"]  # Number of points in the grid
         self.u = np.zeros(self.N) # Grid of points
 
         # Initial condition

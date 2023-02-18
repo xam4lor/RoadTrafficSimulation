@@ -1,0 +1,16 @@
+{
+    "config": {
+        "number_of_points": 200,
+        "dt": 0.001,
+        "t_max": 5.0
+    },
+    "selected_scheme_index": 1,
+    "schemes" : {
+        "first_order_godunov" : {
+            "vm" : 10,
+            "rhom" : 3,
+            "a" : 2.0,
+            "dx": 0.1
+        }
+    }
+}

@@ -4,13 +4,20 @@ import numpy as np
 class FirstOrderGodunov(NumericalScheme):
     """
     First order Godunov scheme.
+
+    Parameters
+    ----------
+    config : dict
+        The configuration dictionary for the schemes.
+    selectNumericalScheme : int
+        The numerical scheme index to use.
     """
-    def __init__(self, selectNumericalScheme):
+    def __init__(self, config, selectNumericalScheme):
         # Parameters
-        self.vm = 10
-        self.rhom = 3
-        self.dx = 0.1
-        self.a = 2.0
+        self.vm = config["first_order_godunov"]["vm"]
+        self.rhom = config["first_order_godunov"]["rhom"]
+        self.dx = config["first_order_godunov"]["dx"]
+        self.a = config["first_order_godunov"]["a"]
 
         # Select the numerical scheme
         if selectNumericalScheme == 1:
