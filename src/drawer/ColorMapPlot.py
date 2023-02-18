@@ -14,12 +14,8 @@ class ColorMapPlot(PlotType):
         t = np.linspace(0, config["config"]["t_max"], tPoints)
 
         # Find corresponding indices
-        xIndices = np.zeros(xPoints)
-        tIndices = np.zeros(tPoints)
-        for i in range(0, xPoints):
-            xIndices[i] = int(i * len(uValues[0]) / xPoints)
-        for i in range(0, tPoints):
-            tIndices[i] = int(i * len(uValues) / tPoints + 2)
+        xIndices = np.arange(0, len(uValues[0]), len(uValues[0]) / xPoints)
+        tIndices = np.arange(2, len(uValues), len(uValues) / tPoints)
 
         # Create an array for the u values
         u = np.zeros([tPoints, xPoints])
