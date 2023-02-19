@@ -22,7 +22,7 @@ class RoadTraffic:
         self.u = np.zeros(self.N) # Grid of points
 
         # Initial condition (to modify)
-        self.u[int(self.N/2)-10:int(self.N/2)+10] = 1 
+        self.u[int(self.N/2)-10:int(self.N/2)+10] = 0.3
 
         # Store the values of u
         self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt) + 2, self.N])

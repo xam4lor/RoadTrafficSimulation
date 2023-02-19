@@ -1,15 +1,15 @@
 {
     "config": {
         "dt": 0.001,
-        "t_max": 2.0,
+        "t_max": 10.0,
         "dx": 0.1,
         "x_max": 10.0
     },
     "selected_scheme_index": 1,
     "schemes" : {
         "first_order_godunov" : {
-            "vm" : 10,
-            "rhom" : 10.0,
+            "vm" : 1,
+            "rhom" : 1.0,
             "a" : 2.0
         }
     }

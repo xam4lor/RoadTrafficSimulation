@@ -30,7 +30,12 @@ class FirstOrderGodunov(NumericalScheme):
             self.selectNumericalScheme = self.u3
 
     def u(self, ui, uLefti, x, t):
-        return self.selectNumericalScheme(ui, uLefti, x, t)
+        ans = self.selectNumericalScheme(ui, uLefti, x, t)
+        if ans < 0:
+            return 0
+        if ans > 1:
+            return 1
+        return ans
 
 
     ### Numerical schemes ###
