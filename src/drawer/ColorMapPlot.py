@@ -7,6 +7,7 @@ class ColorMapPlot(PlotType):
     Plot the u values at each time step as a color map.
     """
     def draw(self, config, uValues):
+        print("Drawing the color map plot...")
         # Size of dimensions
         xPoints = 200
         tPoints = 200
@@ -33,5 +34,4 @@ class ColorMapPlot(PlotType):
 
         # Save the plot
         plt.savefig("./output/colormapplot.png")
-        plt.show()
     

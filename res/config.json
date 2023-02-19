@@ -5,7 +5,7 @@
         "dx": 0.1,
         "x_max": 10.0
     },
-    "selected_scheme_index": 1,
+    "selected_scheme_index": 3,
     "schemes" : {
         "first_order_godunov" : {
             "vm" : 1,

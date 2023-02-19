@@ -1,3 +1,4 @@
+from src.drawer.VideoPlot import VideoPlot
 from src.drawer.ColorMapPlot import ColorMapPlot
 import os
 
@@ -19,11 +20,15 @@ class Drawer:
             os.makedirs("./output/")
 
         # Select the plot type
-        self.plotType = ColorMapPlot()
+        self.plotTypes = [
+            ColorMapPlot(),
+            VideoPlot()
+        ]
 
 
     def draw(self):
         """
         Draw the plot.
         """
-        self.plotType.draw(self.roadTraffic.config, self.roadTraffic.uValues)
+        for plotType in self.plotTypes:
+            plotType.draw(self.roadTraffic.config, self.roadTraffic.uValues)
