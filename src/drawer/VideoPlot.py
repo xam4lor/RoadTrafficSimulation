@@ -50,5 +50,5 @@ class VideoPlot(PlotType):
         # Write the animation to a file
         ani = animation.FuncAnimation(fig, animate, frames=tPoints, interval=dt, blit=True, repeat=False)
         writer = animation.writers['ffmpeg'](fps=dt)
-        ani.save('./output/densityvideo.mp4', writer=writer, dpi=100)
+        ani.save('./output/densityvideo.mp4', writer=writer, dpi=200)
         
