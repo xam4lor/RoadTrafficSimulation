@@ -1,4 +1,5 @@
 from src.drawer.ColorMapPlot import ColorMapPlot
+import os
 
 class Drawer:
     """
@@ -12,6 +13,10 @@ class Drawer:
     def __init__(self, roadTraffic):
         # Store the road traffic object
         self.roadTraffic = roadTraffic
+
+        # Make sure the folder for the plots exists
+        if not os.path.exists("./output/"):
+            os.makedirs("./output/")
 
         # Select the plot type
         self.plotType = ColorMapPlot()
