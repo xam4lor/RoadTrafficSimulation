@@ -9,7 +9,7 @@
     "schemes" : {
         "first_order_godunov" : {
             "vm" : 1,
-            "rhom" : 1.0,
+            "rhom" : 10.0,
             "a" : 2.0
         }
     }
