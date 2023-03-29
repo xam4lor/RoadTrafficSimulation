@@ -40,15 +40,16 @@ class FirstOrderGodunov(NumericalScheme):
 
     ### Numerical schemes ###
     def u1(self, ui, uLefti, x, t):
+        rho0 = 2 
         v = self.vm
-        # if x > 7.0 and x <= 7.2:
-        #     v = 0
-        return ui - v * (1.0 - 2.0 * ui / self.rhom) * self.dt / self.dx * (ui - uLefti)
+        return ui - v * (1.0 - 2.0 * rho0 / self.rhom) * self.dt / self.dx * (ui - uLefti)
     
     def u2(self, ui, uLefti, x, t):
+        rho0 = 2 
         v = self.vm
-        return ui - v * (1.0 - ui / self.rhom) * self.dt / self.dx * (ui - uLefti) * np.exp(-ui / self.rhom)
+        return ui - v * (1.0 - rho0 / self.rhom) * self.dt / self.dx * (ui - uLefti) * np.exp(- rho0 / self.rhom)
     
     def u3(self, ui, uLefti, x, t):
+        rho0 = 2 
         v = self.vm
-        return ui - v * (1.0 - (ui / self.rhom)**self.a) * self.dt / self.dx * (ui - uLefti) * np.exp(-(1.0 / self.a) * (ui / self.rhom)**self.a)
+        return ui - v * (1.0 - (rho0 / self.rhom)**self.a) * self.dt / self.dx * (ui - uLefti) * np.exp(-(1.0 / self.a) * (rho0 / self.rhom)**self.a)
