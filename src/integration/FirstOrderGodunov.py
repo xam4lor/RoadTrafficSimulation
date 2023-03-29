@@ -31,10 +31,6 @@ class FirstOrderGodunov(NumericalScheme):
 
     def u(self, ui, uLefti, x, t):
         ans = self.selectNumericalScheme(ui, uLefti, x, t)
-        if ans < 0:
-            return 0
-        if ans > 1:
-            return 1
         return ans
 
 
