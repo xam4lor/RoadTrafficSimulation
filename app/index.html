@@ -11,10 +11,65 @@
                 padding: 0;
                 overflow: hidden;
             }
+
+            .controls {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #1a1a1a;
+                padding: 8px 10px 10px 9px;
+                border-radius: 0 0 7px 0;
+                flex-direction: column;
+            }
+
+            .controls > button {
+                margin: 5px 0;
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #2a2a2a;
+                color: #fff;
+                font-size: 14px;
+                cursor: pointer;
+            }
+            .controls > button:hover {
+                background-color: #3a3a3a;
+            }
+
+            .controls > #info-title {
+                font-size: 16px;
+                font-weight: bold;
+                color: #fff;
+                margin: 10px 0 5px 0;
+            }
+
+            .controls > #info-text {
+                font-size: 14px;
+                color: #fff;
+                margin: 0;
+            }
         </style>
     </head>
 
     <body>
         <canvas id="canvas" width="800" height="800"></canvas>
+
+        <div class="controls">
+            <div id="info-title">Controls :</div>
+            <div id="info-text">
+                <p>Hold left click and release to create a path.</p>
+                <p>To connect two paths, just start holding left<br/>click near a path extremity and release<br />it near another.</p>
+                <p>Press <b>X</b> to remove a hovered path.</p>
+                <p>Press <b>I</b> to invert a hovered path.</p>
+                <p><i>Note : The road generator only supports<br />up to 100 roads.</i></p>
+            </div>
+
+            <div id="info-title">Generation :</div>
+            <button id="generate">Export</button>
+            <button id="clear">Clear</button>
+        </div>
     </body>
 </html>

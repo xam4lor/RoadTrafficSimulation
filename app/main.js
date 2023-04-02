@@ -196,6 +196,7 @@ let mouseDown = false;
 let mouseDownTime = 0;
 let UUIDIndex = 0;
 window.addEventListener("load", function () {
+createButtons();
 context.canvas.addEventListener("mousedown", function (e) {
     if (mouseDown) return; // Prevent multiple calls (happens on Firefox)
     mouseDown = true;
@@ -223,6 +224,7 @@ window.addEventListener("mouseup", function (e) {
 		activeLine = null;
 		return;
 	}
+    if (!activeLine) return;
 
 	// If line is too short, remove it
 	if (Math.sqrt(
@@ -346,4 +348,18 @@ function exportData() {
 	a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
 	a.download = "roads.json";
 	a.click();
+}
+
+
+function createButtons() {
+    // Create generate button
+    document.getElementById("generate").addEventListener("click", function () {
+        exportData();
+    });
+
+    // Create clear button
+    document.getElementById("clear").addEventListener("click", function () {
+        // Reload page
+        location.reload();
+    });
 }
