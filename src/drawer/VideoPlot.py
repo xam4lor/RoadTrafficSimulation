@@ -1,54 +1,76 @@
 from src.drawer.PlotType import PlotType
-from matplotlib import animation
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 class VideoPlot(PlotType):
     """
-    Plot the u values as a video.
+    Plot the roads values as a video.
+
+    Parameters
+    ----------
+    config : Config
+        The json configuration.
+    roads : array
+        The roads to plot.
     """
-    def draw(self, config, uValues):
-        print("Drawing the video plot...")
-        # Size of dimensions
-        xPoints = 200
-        tPoints = 100
-        x = np.linspace(0, config["config"]["x_max"], xPoints)
-        dt = int(tPoints / config["config"]["t_max"])
+    def draw(self, config, roads):
+        print("Drawing the animation of the roads...")
 
-        # Find corresponding indices
-        xIndices = np.arange(0, len(uValues[0]), len(uValues[0]) / xPoints)
-        tIndices = np.arange(2, len(uValues), len(uValues) / tPoints)
+        L = config["config"]["x_max"]
+        dx = config["config"]["dx"]
+        framesCount = int(config["config"]["t_max"] * 60)
+        framesList = np.linspace(0, len(roads[0].rhoValues) - 1, framesCount).astype(int)
 
-        # Initialize the plot
-        fig = plt.figure()
-        line, = plt.plot([], [])
-        plt.xlim(0, config["config"]["x_max"])
-        plt.ylim(0, 1)
-        plt.xlabel('Distance from origin $x$ (m)')
-        plt.ylabel('Density of cars $\\rho(x,t)$ (m$^{-1}$)')
-        plt.title('Density of cars $\\rho(x,t)$ at $t = 0$ s')
+        # Make sure the folder for the images exists
+        if not os.path.exists("./out/images/"):
+            os.makedirs("./out/images/")
 
-        # Make the animation
-        def animate(i):
-            # Update title
-            t = round(tIndices[i] * config["config"]["dt"], 1)
-            plt.title('Density of cars $\\rho(x,t)$ at $t = ' + str(t) + '$ s')
+        # Generate an image for each time step
+        print("Converting images to pixels and saving them...")
+        tIterator = 0
+        for tVal in framesList:
+            # Create pixel array
+            pS = int(L / dx)
+            pixels = np.zeros([pS, pS])
+            pixelsCount = np.zeros([pS, pS])
 
-            # Progress bar
-            if i == tPoints - 1:
-                print("t = " + str(config["config"]["t_max"]) + " / " + str(config["config"]["t_max"]) + " s.")
-            else:
-                print("t = " + str(round(tIndices[i] * config["config"]["dt"], 1)) + " / " + str(config["config"]["t_max"]) + " s.", end="\r")
+            # Add the roads
+            for road in roads:
+                for j in range(0, len(road.rhoValues[tVal])):
+                    xPos = road.startPos[0] + (road.endPos[0] - road.startPos[0]) * j / len(road.rhoValues[tVal])
+                    yPos = road.startPos[1] + (road.endPos[1] - road.startPos[1]) * j / len(road.rhoValues[tVal])
 
-            # Update line
-            u = np.zeros(xPoints)
-            for j in range(0, xPoints):
-                u[j] = uValues[int(tIndices[i]), int(xIndices[j])]
-            line.set_data(x, u)
-            return line,
+                    # Draw the pixel and a bit around it
+                    for x in range(int(xPos * pS / L) - 1, int(xPos * pS / L) + 2):
+                        for y in range(int(yPos * pS / L) - 1, int(yPos * pS / L) + 2):
+                            if x >= 0 and x < pS and y >= 0 and y < pS:
+                                pixels[x, y] += road.rhoValues[tVal][j]
+                                pixelsCount[x, y] += 1
 
-        # Write the animation to a file
-        ani = animation.FuncAnimation(fig, animate, frames=tPoints, interval=dt, blit=True, repeat=False)
-        writer = animation.writers['ffmpeg'](fps=dt)
-        ani.save('./output/densityvideo.mp4', writer=writer, dpi=200)
+            # Average the pixels
+            for x in range(0, pS):
+                for y in range(0, pS):
+                    if pixelsCount[x, y] > 0:
+                        pixels[x, y] /= pixelsCount[x, y]
+
+            # Save the image
+            plt.imsave('out/images/' + str(tIterator) + '.png', pixels, cmap='inferno', vmin=0, vmax=0.6)
+
+            # Print progress
+            if int(tIterator / len(framesList) * 1000) % 20 == 0:
+                print("Frames generating percentage = " + str(int(tIterator / len(framesList) * 1000) / 10) + "%.", end="\r")
+            tIterator += 1
+
+        # Delete the old video
+        if os.path.exists('out/video.mp4'):
+            os.remove('out/video.mp4')
+
+        # Create a video from the images and scale it to 1080p, force overwrite
+        print("Creating video...")
+        os.system('ffmpeg -r 30 -i out/images/%d.png -vcodec libx264 -crf 25 -pix_fmt yuv420p -vf "transpose=2, scale=1920:1080" out/video.mp4')
+
+        # Remove the images
+        for file in os.listdir('out/images'):
+            os.remove('out/images/' + file)
         

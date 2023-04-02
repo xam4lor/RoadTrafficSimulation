@@ -1,8 +1,15 @@
 class PlotType:
     """
     Generic class for all plot types.
+
+    Parameters
+    ----------
+    config : Config
+        The json configuration.
+    roads : array
+        The roads to plot.
     """
-    def draw(self, config, uValues):
+    def draw(self, config, roads):
         """
         Draw the system.
 
@@ -10,7 +17,5 @@ class PlotType:
         ----------
         config : dict
             The configuration dictionary.
-        uValues : array
-            The values of u at each time step.
         """
         raise NotImplementedError("Draw method not implemented")

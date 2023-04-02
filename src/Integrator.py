@@ -1,14 +1,22 @@
 from src.integration.FirstOrderGodunov import FirstOrderGodunov
+from src.RoadSegment import RoadSegment
 import numpy as np 
+import json
 
 class Integrator:
     """
     The Integrator class is responsible for integrating the system given a numerical scheme.
+
+    Parameters
+    ----------
+    roadTraffic : RoadTraffic
+        The road traffic object.
     """
     def __init__(self, roadTraffic):
         # Store the road traffic object
         self.roadTraffic = roadTraffic
 
+        # ==== CREATE INTEGRATOR CONFIGURATION ====
         # Select the numerical scheme
         selectedNumericalScheme = roadTraffic.config["selected_scheme_index"] # 1, 2, or 3, corresponding to equation (2.5,6,7)
         self.numericalScheme = FirstOrderGodunov(roadTraffic.config, selectedNumericalScheme)
@@ -17,29 +25,61 @@ class Integrator:
         self.t = 0
         self.tMax = roadTraffic.config["config"]["t_max"]
         self.dt = roadTraffic.config["config"]["dt"]
-    
 
-    def step(self, u):
-        """
-        Integrate the system to the next time step.
 
-        Parameters
-        ----------
-        u : array
-            The values of u at the previous time step.
+        # ==== CREATE ROADS ====
+        # Open config file for roads
+        fRoadsConfig = open('./res/roads.json', 'r')
+        roadConfig = json.load(fRoadsConfig)
+        fRoadsConfig.close()
 
-        Returns
-        -------
-        nextu : array
-            The values of u at the next time step.
-        """
-        # Compute the values of u at the next time step
-        nextu = np.zeros(self.roadTraffic.N)
-        for i in range(0, self.roadTraffic.N):
-            nextu[i] = self.numericalScheme.u(u[i], u[i-1], self.roadTraffic.config["config"]["dx"] * i, self.t)
+        # Create road segments
+        self.roads = []
+        for road in roadConfig['roads']:
+            # Create road segment
+            rStart = [
+                road['start']['x'] / roadConfig['dimensions']['x'] * roadTraffic.config["config"]["x_max"],
+                road['start']['y'] / roadConfig['dimensions']['y'] * roadTraffic.config["config"]["x_max"]
+            ]
+            rEnd = [
+                road['end']['x'] / roadConfig['dimensions']['x'] * roadTraffic.config["config"]["x_max"],
+                road['end']['y'] / roadConfig['dimensions']['y'] * roadTraffic.config["config"]["x_max"]
+            ]
+            rSegment = RoadSegment(roadTraffic, road['name'], rStart, rEnd)
+
+            # Add inflow
+            inF = road['inFlow']
+            if inF['type'] == 'uniform':
+                r = inF['rate']
+                sT = inF['startTime']
+                rSegment.addInFlow(lambda t: r if t > sT else 0)
+
+            # Add road to list at index
+            self.roads.insert(road['id'], rSegment)
+
+        # Connect roads
+        for road in roadConfig['roads']:
+            for inRoad in road['inRoads']:
+                self.roads[road['id']].addInRoads(self.roads[inRoad])
+            for outRoad in road['outRoads']:
+                self.roads[road['id']].addOutRoads(self.roads[outRoad])
+
+
+        # ==== INITIALIZE ROADS ====
+        # Set initial density
+        self.roads[0].lastRho[:] = 0
+        self.roads[0].lastRho[0:20] = 0.6
+
+        self.roads[0].addInFlow(lambda t: 0.6 * np.abs(np.sin(t)))
+
+
+    """
+    Step the system forward in time.
+    """
+    def step(self):
+        # Update each road
+        for road in self.roads:
+            road.step(self.numericalScheme, self.t)
 
         # Update the time
         self.t += self.dt
-
-        # Return the values of u at the next time step
-        return nextu

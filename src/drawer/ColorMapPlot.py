@@ -1,37 +1,58 @@
 from src.drawer.PlotType import PlotType
 import matplotlib.pyplot as plt
+from matplotlib import interactive
 import numpy as np
 
 class ColorMapPlot(PlotType):
     """
-    Plot the u values at each time step as a color map.
+    Plot the roads values at each time step as a color map.
+
+    Parameters
+    ----------
+    config : Config
+        The json configuration.
+    roads : array
+        The roads to plot.
     """
-    def draw(self, config, uValues):
-        print("Drawing the color map plot...")
-        # Size of dimensions
-        xPoints = 200
-        tPoints = 200
-        x = np.linspace(0, config["config"]["x_max"], xPoints)
-        t = np.linspace(0, config["config"]["t_max"], tPoints)
+    def draw(self, config, roads):
+        print("Drawing the color map plots...")
 
-        # Find corresponding indices
-        xIndices = np.arange(0, len(uValues[0]), len(uValues[0]) / xPoints)
-        tIndices = np.arange(2, len(uValues), len(uValues) / tPoints)
+        # Plot the density
+        plotIndex = 1
+        for road in roads:
+            xMax = len(road.rho)
+            tMax = len(road.rhoValues)
 
-        # Create an array for the u values
-        u = np.zeros([tPoints, xPoints])
-        for i in range(0, tPoints):
-            for j in range(0, xPoints):
-                u[i, j] = uValues[int(tIndices[i]), int(xIndices[j])]
+            # Size of dimensions
+            xPoints = 200
+            tPoints = 200
+            x = np.linspace(0, xMax, xPoints)
+            t = np.linspace(0, tMax, tPoints)
 
-        # Plot the u values as a color map
-        plt.figure()
-        plt.pcolor(x, t, u, cmap='coolwarm')
-        plt.colorbar()
-        plt.xlabel('Distance from origin $x$ (m)')
-        plt.ylabel('Time $t$ (s)')
-        plt.title('Density of cars $\\rho(x,t)$')
+            # Find corresponding indices
+            xIndices = np.arange(0, len(road.rhoValues[0]), len(road.rhoValues[0]) / xPoints)
+            tIndices = np.arange(0, len(road.rhoValues), len(road.rhoValues) / tPoints)
 
-        # Save the plot
-        plt.savefig("./output/colormapplot.png", dpi=200)
+            # Create an array for the u values
+            u = np.zeros([tPoints, xPoints])
+            for i in range(0, tPoints):
+                for j in range(0, xPoints):
+                    u[i, j] = road.rhoValues[int(tIndices[i])][int(xIndices[j])]
+
+            # Plot the u values as a color map
+            plt.figure(plotIndex)
+            plt.pcolor(x, t, u, cmap='coolwarm', vmin=0, vmax=1.0)
+            plt.colorbar()
+            plt.xlabel('Distance from origin $x$ (m)')
+            plt.ylabel('Time $t$ (s)')
+            plt.title('Density of cars $\\rho(x,t)$ for road ' + road.name)
+
+            # Display the plots
+            if plotIndex == 1:
+                interactive(True)
+            elif plotIndex == len(roads):
+                interactive(False)
+            plt.show()
+
+            plotIndex = plotIndex + 1
     

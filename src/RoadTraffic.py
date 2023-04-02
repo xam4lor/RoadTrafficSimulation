@@ -17,40 +17,22 @@ class RoadTraffic:
         self.integrator = Integrator(self)
         self.drawer = Drawer(self)
 
-        # Initialize grid points u (= rho(x,t)))
-        self.N = int(self.config["config"]["x_max"] / self.config["config"]["dx"]) # Number of points in the grid
-        self.u = np.zeros(self.N) # Grid of points
 
-        # Initial condition (to modify)
-        self.u[int(self.N/4)-10:int(self.N/4)+10] = 0.8
-
-        # Store the values of u
-        self.uValues = np.zeros([int(self.integrator.tMax / self.integrator.dt) + 2, self.N])
-        self.uValues[0] = self.u # u[-1] = u0
-        self.uValues[1] = self.u # u[0] = u1
-
-
+    """
+    Run the simulation.
+    """
     def run(self):
-        """
-        Run the simulation and draw the plots.
-        """
-        loopIndex = 1
         print("Running simulation...")
         while (self.integrator.t < self.integrator.tMax):
             # Integrate the system to the next time step
-            nextu = self.integrator.step(self.u) 
-            self.uValues[loopIndex] = nextu
-            self.u = nextu
+            self.integrator.step()
 
             # Print the progress
-            if int(self.integrator.t * 1000) % int(self.integrator.tMax / 100 * 1000) == 0:
-                print("t = " + str(int(self.integrator.t * 10)/10) + " / " + str(self.integrator.tMax) + " s.", end="\r")
-
-            # Next value
-            loopIndex += 1
+            if int(self.integrator.t * 1000) % int(self.integrator.tMax / 100 * 50) == 0:
+                print("Simulation percentage = " + str(int(self.integrator.t / self.integrator.tMax * 100)) + "%.", end="\r")
 
         # Draw the plots
-        print("\nDrawing plots...")
+        print("\nDrawing plots and animations...")
         self.drawer.draw()
-        print("Done. Plots saved in the './output' folder.")
+        print("Animation saved in the './out' folder.")
             

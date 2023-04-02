@@ -16,19 +16,19 @@ class Drawer:
         self.roadTraffic = roadTraffic
 
         # Make sure the folder for the plots exists
-        if not os.path.exists("./output/"):
-            os.makedirs("./output/")
+        if not os.path.exists("./out/"):
+            os.makedirs("./out/")
 
         # Select the plot type
         self.plotTypes = [
-            ColorMapPlot(),
+            # ColorMapPlot(),
             VideoPlot()
         ]
 
 
+    """
+    Draw the plot.
+    """
     def draw(self):
-        """
-        Draw the plot.
-        """
         for plotType in self.plotTypes:
-            plotType.draw(self.roadTraffic.config, self.roadTraffic.uValues)
+            plotType.draw(self.roadTraffic.config, self.roadTraffic.integrator.roads)
