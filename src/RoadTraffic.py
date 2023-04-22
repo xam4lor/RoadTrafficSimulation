@@ -15,7 +15,7 @@ class RoadTraffic:
 
         # Create an instance of the Integrator and Drawer class
         self.integrator = Integrator(self)
-        self.drawer = Drawer(self)
+        self.drawer = Drawer(self, self.config["outputType"])
 
 
     """

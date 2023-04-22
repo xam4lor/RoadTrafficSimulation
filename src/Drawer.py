@@ -11,7 +11,7 @@ class Drawer:
     roadTraffic : RoadTraffic
         The road traffic object.
     """
-    def __init__(self, roadTraffic):
+    def __init__(self, roadTraffic, plotType):
         # Store the road traffic object
         self.roadTraffic = roadTraffic
 
@@ -20,10 +20,10 @@ class Drawer:
             os.makedirs("./out/")
 
         # Select the plot type
-        self.plotTypes = [
-            # ColorMapPlot(),
-            VideoPlot()
-        ]
+        if plotType == "video":
+            self.plotTypes = [VideoPlot()]
+        elif plotType == "density":
+            self.plotTypes = [ColorMapPlot()]
 
 
     """
