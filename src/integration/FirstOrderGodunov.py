@@ -21,24 +21,17 @@ class FirstOrderGodunov(NumericalScheme):
         self.dx = config["config"]["dx"]
         self.dt = config["config"]["dt"]
 
-        # For now, temporary scheme
-        self.selectNumericalScheme = self.tempScheme
-
         # Select the numerical scheme
-        # if selectNumericalScheme == 1:
-        #     self.selectNumericalScheme = self.u1
-        # elif selectNumericalScheme == 2:
-        #     self.selectNumericalScheme = self.u2
-        # elif selectNumericalScheme == 3:
-        #     self.selectNumericalScheme = self.u3
+        if selectNumericalScheme == 1:
+            self.selectNumericalScheme = self.u1
+        elif selectNumericalScheme == 2:
+            self.selectNumericalScheme = self.u2
+        elif selectNumericalScheme == 3:
+            self.selectNumericalScheme = self.u3
 
     def u(self, ui, uLefti, x, t):
         ans = self.selectNumericalScheme(ui, uLefti, x, t)
         return ans
-    
-    def tempScheme(self, ui, uLefti, x, t):
-        speed = 5
-        return ui - speed * self.dt / self.dx * (ui - uLefti)
 
 
     ### Numerical schemes ###
