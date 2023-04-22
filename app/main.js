@@ -298,6 +298,14 @@ window.addEventListener("keydown", function (e) {
 		for (let i = 0; i < lines.length; i++)
 			setLineConnections(lines[i]);
 	}
+
+    // ADD INPUT FLUX TO HOVERED LINE
+    if (e.key == "a" && hoveredLine) {
+        if (hoveredLine.color[1] == 127)
+            hoveredLine.color[1] = 255 * 0.2;
+        else
+            hoveredLine.color[1] = 127;
+    }
 });
 });
 
@@ -324,6 +332,24 @@ function exportData() {
 		for (let j = 0; j < lines[i].connectEnd.length; j++)
 			outRoads.push(lines.indexOf(lines[i].connectEnd[j]));
 
+        // Set inflow
+        let inFlow = { type: "None" };
+        if (lines[i].color[1] == 127) {
+            let inFType = document.getElementById("road-type").value;
+            if (inFType == "0") // a |sin(bt)|
+                inFlow = {
+                    "type": "sin",
+                    "amplitude": parseFloat(document.getElementById("flux-a").value),
+                    "frequency": parseFloat(document.getElementById("flux-b").value)
+                };
+            else if (inFType == "1") // a if t < b, else 0
+                inFlow = {
+                    "type": "if",
+                    "rate": parseFloat(document.getElementById("flux-a").value),
+                    "startTime": parseFloat(document.getElementById("flux-b").value)
+                };
+        }
+
 		// Set road
 		let line = lines[i];
 		data.roads.push({
@@ -339,7 +365,7 @@ function exportData() {
 			},
 			inRoads: inRoads,
 			outRoads: outRoads,
-			inFlow: { "type": "None" }
+			inFlow: inFlow
 		});
 	}
 	

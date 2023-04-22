@@ -10,6 +10,8 @@
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
+                color: #fff;
+                font-size: 14px;
             }
 
             .controls {
@@ -25,7 +27,16 @@
                 flex-direction: column;
             }
 
-            .controls > button {
+            .info-buttons {
+                padding-top: 3px;
+                margin-bottom: 8px;
+            }
+
+            #info-title {
+                padding-top: 13px;
+            }
+
+            .info-buttons > button {
                 margin: 5px 0;
                 padding: 5px 10px;
                 border: none;
@@ -35,21 +46,25 @@
                 font-size: 14px;
                 cursor: pointer;
             }
-            .controls > button:hover {
+            .info-buttons > button:hover {
                 background-color: #3a3a3a;
             }
 
-            .controls > #info-title {
+            .info-buttons > #info-title {
                 font-size: 16px;
                 font-weight: bold;
                 color: #fff;
                 margin: 10px 0 5px 0;
             }
 
-            .controls > #info-text {
+            .info-buttons > #info-text {
                 font-size: 14px;
                 color: #fff;
                 margin: 0;
+            }
+
+            .flux {
+                width: 59px;
             }
         </style>
     </head>
@@ -58,18 +73,34 @@
         <canvas id="canvas" width="800" height="800"></canvas>
 
         <div class="controls">
-            <div id="info-title">Controls :</div>
+            <div id="info-title">CONTROLS</div>
             <div id="info-text">
-                <p>Hold left click and release to create a path.</p>
-                <p>To connect two paths, just start holding left<br/>click near a path extremity and release<br />it near another.</p>
+                <p>Hold left click and release to create a path.<br />To connect two paths, just start holding left<br/>click near a path extremity and release<br />it near another.</p>
+                <p>Press <b>A</b> to add an input density flux to the<br />hovered path.</p>
                 <p>Press <b>X</b> to remove a hovered path.</p>
                 <p>Press <b>I</b> to invert a hovered path.</p>
                 <p><i>Note : The road generator only supports<br />up to 100 roads.</i></p>
             </div>
 
-            <div id="info-title">Generation :</div>
-            <button id="generate">Export</button>
-            <button id="clear">Clear</button>
+            <div id="info-title">INPUT FLUX SETTINGS</div>
+            <div class="info-buttons">
+                <label>a = 
+                    <input class="flux" id="flux-a" type="number" value="0.6" min="0" max="1" step="0.01" />
+                </label> (default: 0.6)<br />
+                <label>b = 
+                    <input class="flux" id="flux-b" type="number" value="1" min="0" max="10" step="0.01" />
+                </label> (default: 1)<br />
+                <select id="road-type">
+                    <option value="0">a |sin(bt)|</option>
+                    <option value="1">a if t < b, else 0</option>
+                </select>
+            </div>
+
+            <div id="info-title">GENERATION</div>
+            <div class="info-buttons">
+                <button id="generate">Export</button>
+                <button id="clear">Clear</button>
+            </div>
         </div>
     </body>
 </html>

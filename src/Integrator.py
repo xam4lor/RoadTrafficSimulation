@@ -49,10 +49,14 @@ class Integrator:
 
             # Add inflow
             inF = road['inFlow']
-            if inF['type'] == 'uniform':
+            if inF['type'] == 'if':
                 r = inF['rate']
                 sT = inF['startTime']
-                rSegment.addInFlow(lambda t: r if t > sT else 0)
+                rSegment.addInFlow(lambda t: r if t < sT else 0)
+            elif inF['type'] == 'sin':
+                a = inF['amplitude']
+                f = inF['frequency']
+                rSegment.addInFlow(lambda t: a * np.abs(np.sin(f * t)))
 
             # Add road to list at index
             self.roads.insert(road['id'], rSegment)
@@ -63,14 +67,6 @@ class Integrator:
                 self.roads[road['id']].addInRoads(self.roads[inRoad])
             for outRoad in road['outRoads']:
                 self.roads[road['id']].addOutRoads(self.roads[outRoad])
-
-
-        # ==== INITIALIZE ROADS ====
-        # Set initial density
-        self.roads[0].lastRho[:] = 0
-        self.roads[0].lastRho[0:20] = 0.6
-
-        self.roads[0].addInFlow(lambda t: 0.6 * np.abs(np.sin(t)))
 
 
     """
