@@ -1,4 +1,5 @@
 from src.integration.FirstOrderGodunov import FirstOrderGodunov
+from src.integration.SecondOrderGodunov import SecondOrderGodunov
 from src.RoadSegment import RoadSegment
 import numpy as np 
 import json
@@ -18,8 +19,11 @@ class Integrator:
 
         # ==== CREATE INTEGRATOR CONFIGURATION ====
         # Select the numerical scheme
-        selectedNumericalScheme = roadTraffic.config["selected_scheme_index"] # 1, 2, or 3, corresponding to equation (2.5,6,7)
-        self.numericalScheme = FirstOrderGodunov(roadTraffic.config, selectedNumericalScheme)
+        selectedNumericalScheme = roadTraffic.config["selected_scheme_index"] # 1, 2, or 3, 4 corresponding to equation (2.5,6,7,14)
+        if (selectedNumericalScheme == 4):
+            self.numericalScheme = SecondOrderGodunov(roadTraffic.config, selectedNumericalScheme)
+        else :
+            self.numericalScheme = FirstOrderGodunov(roadTraffic.config, selectedNumericalScheme)
 
         # Simulation time parameters
         self.t = 0

@@ -22,7 +22,7 @@ class SecondOrderGodunov(NumericalScheme):
         self.dt = config["config"]["dt"]
 
     ### Numerical schemes ###
-    def u(self, ui, uLefti, x, t):
+    def u(self, ui, uLefti, uRighti, x, t):
         v = self.vm
-        return ui - v * (1.0 - 2.0 * ui / self.rhom) * self.dt / self.dx * (ui - uLefti) + alpha * self.dt / self.dx**2 * (uRighti - 2*ui + uLefti)
+        return ui - v * (1.0 - 2.0 * ui / self.rhom) * self.dt / self.dx * (ui - uLefti) + self.alpha * self.dt / self.dx**2 * (uRighti - 2*ui + uLefti)
     

@@ -29,20 +29,20 @@ class FirstOrderGodunov(NumericalScheme):
         elif selectNumericalScheme == 3:
             self.selectNumericalScheme = self.u3
 
-    def u(self, ui, uLefti, x, t):
-        ans = self.selectNumericalScheme(ui, uLefti, x, t)
+    def u(self, ui, uLefti, uRighti, x, t):
+        ans = self.selectNumericalScheme(ui, uLefti, uRighti, x, t)
         return ans
 
 
     ### Numerical schemes ###
-    def u1(self, ui, uLefti, x, t):
+    def u1(self, ui, uLefti,uRighti, x, t):
         v = self.vm
         return ui - v * (1.0 - 2.0 * ui / self.rhom) * self.dt / self.dx * (ui - uLefti)
     
-    def u2(self, ui, uLefti, x, t): 
+    def u2(self, ui, uLefti, uRighti, x, t): 
         v = self.vm
         return ui - v * (1.0 - ui / self.rhom) * self.dt / self.dx * (ui - uLefti) * np.exp(- ui / self.rhom)
     
-    def u3(self, ui, uLefti, x, t):
+    def u3(self, ui, uLefti, uRighti, x, t):
         v = self.vm
         return ui - v * (1.0 - (ui / self.rhom)**self.a) * self.dt / self.dx * (ui - uLefti) * np.exp(-(1.0 / self.a) * (ui / self.rhom)**self.a)

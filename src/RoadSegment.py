@@ -67,9 +67,20 @@ class RoadSegment:
                     inRoad = self.inRoads[inRoadIndex]
                     lastRho += inRoad.lastRho[inRoad.lastRho.size - 1] / previousRoadsOutCount[inRoadIndex]
 
-            # Update the cell
-            self.rho[i] = scheme.u(self.lastRho[i], lastRho, i * self.dx, t)
+            if i == (len(self.rho) - 1):
+                nextRho = 0 # If there are no outcoming roads, set the nextRho to 0
 
+                # Connect to the first cells of the next roads
+                for outRoadIndex in range(len(self.outRoads)):
+                    outRoad = self.outRoads[outRoadIndex]
+                    nextRho += outRoad.lastRho[0] 
+            else :
+                nextRho = self.lastRho[i+1]
+
+
+            # Update the cell
+            self.rho[i] = scheme.u(self.lastRho[i], lastRho, nextRho, i * self.dx, t)
+            
         # Update last values
         self.lastRho = self.rho
 
