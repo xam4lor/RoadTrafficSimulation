@@ -8,11 +8,11 @@ This project aims to simulate road traffic using a macroscopic approach. The tra
 ## **How to run this project**
 ### Prerequisites
 - Clone this repository and enter the python environment. The list of dependencies is in the `requirements.txt` file. You will also **need to install [ffmpeg](https://ffmpeg.org/)** to generate the video file.
-- To change the parameters used by the numerical solver, edit the `config.py` file in the `res/` folder.
+- To change the parameters used by the numerical solver, edit the `config.json` file in the `res/` folder.
 
 ### Generate the road network
 - Open the HTML file `index.html` in the `app/` folder in a browser. This will open an interface to generate the road network and the traffic flow. The instructions are written on the interface webpage.
-- Once the network is generated, click on the `Generate` button to get a file called `roads.json`. This file contains the road network data used by the simulation. Copy this file in the `res/` folder by replacing the existing file (*the name of the file is important and should be `roads.json`*).
+- Once the network is generated, click on the `Export` button to get a file called `roads.json`. This file contains the road network data used by the simulation. Copy this file in the `res/` folder by replacing the existing file (*the name of the file is important and should be `roads.json`*).
 
 ### Run the simulation
 - Finally, run the `main.py` file. This will run the simulation and generate a video file in the `out/` folder. This video file contains the simulation of the traffic flow on the road network.
