@@ -11,6 +11,12 @@
             "vm" : 1.0,
             "rhom" : 1.0,
             "a" : 2.0
+        },
+        "second_order_godunov" : {
+            "vm" : 1.0,
+            "rhom" : 1.0,
+            "a" : 2.0,
+            "alpha" : 0.3
         }
     },
     "outputType" : "video"
